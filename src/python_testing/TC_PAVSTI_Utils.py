@@ -221,6 +221,6 @@ class PAVSTIUtils:
             return
 
         tls_utils = TLSUtils(self, endpoint=endpointID)
-        result = await tls_utils.send_remove_tls_endpoint_command(
+        await tls_utils.send_remove_tls_endpoint_command(
             endpoint_id=tlsEndPoint
         )
