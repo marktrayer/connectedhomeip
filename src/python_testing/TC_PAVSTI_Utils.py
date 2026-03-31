@@ -219,7 +219,7 @@ class PAVSTIUtils:
 
         if endpointID is None or tlsEndPoint is None:
             return
-            
+
         tls_utils = TLSUtils(self, endpoint=endpointID)
         result = await tls_utils.send_remove_tls_endpoint_command(
             endpoint_id=tlsEndPoint
