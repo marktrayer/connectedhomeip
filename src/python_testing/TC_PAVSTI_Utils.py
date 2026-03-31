@@ -210,3 +210,9 @@ class PAVSTIUtils:
             ccdid=csr_result.ccdid,
         )
         return result.endpointID, host_ip
+
+    async def postcondition_remove_tls_endpoint(self, endpointID, tlsEndPoint):
+        tls_utils = TLSUtils(self, endpoint=endpointID)
+        result = await tls_utils.send_remove_tls_endpoint_command(
+            endpoint_id=tlsEndPoint
+        )
