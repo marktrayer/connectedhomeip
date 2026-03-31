@@ -77,7 +77,7 @@ class TC_PAVST_2_12(MatterBaseTest, PAVSTTestBase, PAVSTIUtils):
         if self.server is not None:
             self.server.terminate()
         super().teardown_class()
-        
+
     @async_test_body
     async def teardown_test(self):
         await self.postcondition_remove_tls_endpoint(self.endpoint, self.tlsEndpointId)

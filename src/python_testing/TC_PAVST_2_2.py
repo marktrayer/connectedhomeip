@@ -74,7 +74,7 @@ class TC_PAVST_2_2(MatterBaseTest, PAVSTTestBase, PAVSTIUtils):
     async def teardown_test(self):
         await self.postcondition_remove_tls_endpoint(self.endpoint, self.tlsEndpointId)
         super().teardown_test()
-    
+
     def steps_TC_PAVST_2_2(self) -> list[TestStep]:
         return [
             TestStep("precondition", "Commissioning, already done", is_commissioning=True),
