@@ -77,6 +77,11 @@ class TC_PAVST_2_11(MatterBaseTest, PAVSTTestBase, PAVSTIUtils):
             self.server.terminate()
         super().teardown_class()
 
+    @async_test_body
+    async def teardown_test(self):
+        await self.postcondition_remove_tls_endpoint(self.tlsEndpointId)
+        super().teardown_test()
+
     def steps_TC_PAVST_2_11(self) -> list[TestStep]:
         return [
             TestStep("precondition", "Commissioning, already done", is_commissioning=True),
@@ -170,8 +175,8 @@ class TC_PAVST_2_11(MatterBaseTest, PAVSTTestBase, PAVSTIUtils):
         # Precondition
         self.step("precondition")
         host_ip = self.user_params.get("host_ip", None)
-        tlsEndpointId, host_ip = await self.precondition_provision_tls_endpoint(
-            endpoint=endpoint, server=self.server, host_ip=host_ip)
+        self.tlsEndpointId, host_ip = await self.precondition_provision_tls_endpoint(
+            server=self.server, host_ip=host_ip)
         uploadStreamId = self.server.create_stream(SupportedIngestInterface.cmaf.value)
 
         # Step 1: Reads CurrentConnections attribute
@@ -281,11 +286,11 @@ class TC_PAVST_2_11(MatterBaseTest, PAVSTTestBase, PAVSTIUtils):
         log.info(f"ZoneManagement FeatureMap: {aFeatureMap}")
         self.perZoneSenseSupported = aFeatureMap & zmcluster.Bitmaps.Feature.kPerZoneSensitivity
 
-        # Step 10: Read ProvisionedEndpoints attribute from TLS Client Management Cluster
+        # Step 10: Read ProvisionedEndpoints attribute from TLS Client Management Cluster which is always on EP0
         self.step(10)
         if self.pics_guard(self.check_pics("PAVST.S")):
             aProvisionedEndpoints = await self.read_single_attribute_check_success(
-                endpoint=endpoint, cluster=tlscluster, attribute=tlsattr.ProvisionedEndpoints
+                endpoint=0, cluster=tlscluster, attribute=tlsattr.ProvisionedEndpoints
             )
             log.info(f"aProvisionedEndpoints: {aProvisionedEndpoints}")
 
