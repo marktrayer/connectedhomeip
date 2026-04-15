@@ -96,9 +96,12 @@ DataModel::ActionReturnStatus TLSClientManagementCluster::ReadAttribute(const Da
     case MaxProvisioned::Id:
         return encoder.Encode(mMaxProvisioned);
     case ProvisionedEndpoints::Id: {
+        ChipLogProgress(Zcl, "TLSClientMgr; Read Provisioned EPs");
         TLSClientManagementCluster * server = this;
         auto matterEndpoint                 = request.path.mEndpointId;
         auto fabric                         = request.GetAccessingFabricIndex();
+        ChipLogProgress(Zcl, "TLSClientMgr; Read Provisioned EPs #2");
+
         return encoder.EncodeList([server, matterEndpoint, fabric](const auto & listEncoder) -> CHIP_ERROR {
             return server->EncodeProvisionedEndpoints(matterEndpoint, fabric, listEncoder);
         });
@@ -140,6 +143,7 @@ CHIP_ERROR
 TLSClientManagementCluster::EncodeProvisionedEndpoints(EndpointId matterEndpoint, FabricIndex fabric,
                                                        const AttributeValueEncoder::ListEncodeHelper & encoder)
 {
+    ChipLogProgress(Zcl, "TLSClientMgr: EncodeProvisionedEndpoints");
     return mDelegate.ForEachEndpoint(matterEndpoint, fabric,
                                      [&](auto & endpoint) -> CHIP_ERROR { return encoder.Encode(endpoint); });
 }
