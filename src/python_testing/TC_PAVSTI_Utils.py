@@ -30,7 +30,6 @@ from cryptography import x509
 from cryptography.hazmat.primitives import serialization
 from TC_TLS_Utils import TLSUtils
 
-import matter.clusters as Clusters
 from matter.interaction_model import Status
 from matter.testing.tasks import Subprocess
 
