@@ -422,7 +422,7 @@ class TC_PAVST_2_11(MatterBaseTest, PAVSTTestBase, PAVSTIUtils):
         status = await self.allocate_one_pushav_transport(
             endpoint,
             audioStream_ID=invalid_audio_stream_id,
-            tlsEndPoint=tlsEndpointId,
+            tlsEndPoint=self.tlsEndpointId,
             url=f"https://{host_ip}:1234/streams/{uploadStreamId}/",
             expected_cluster_status=pvcluster.Enums.StatusCodeEnum.kInvalidStream)
         asserts.assert_equal(status, pvcluster.Enums.StatusCodeEnum.kInvalidStream,
