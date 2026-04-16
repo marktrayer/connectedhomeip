@@ -166,7 +166,7 @@ class TC_PAVST_2_10(MatterBaseTest, PAVSTTestBase, PAVSTIUtils):
         for idx, (desc, url) in enumerate(invalid_cases, start=5):
             self.step(idx)
             status = await self.allocate_one_pushav_transport(
-                endpoint, tlsEndPoint=tlsEndpointId, url=url, expected_cluster_status=pvcluster.Enums.StatusCodeEnum.kInvalidURL, expiryTime=30)
+                endpoint, tlsEndPoint=self.tlsEndpointId, url=url, expected_cluster_status=pvcluster.Enums.StatusCodeEnum.kInvalidURL, expiryTime=30)
             asserts.assert_equal(status, pvcluster.Enums.StatusCodeEnum.kInvalidURL,
                                  f"Push AV Transport should return InvalidURL for {desc}")
 
